@@ -1,8 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Bugs</h1>
-
-<table>
+<!--<h1>Listing Bugs</h1>-->
+<!--Responsive tab starts here...-->
+<main class="bugs-index">
+  
+  <input id="tab1" type="radio" name="tabs" checked>
+  <label for="tab1">Open</label>
+    
+  <input id="tab2" type="radio" name="tabs">
+  <label for="tab2">Closed</label>
+    
+  <input id="tab3" type="radio" name="tabs">
+  <label for="tab3">Monitor</label>
+    
+  <section id="content1">
+   
+    <table>
   <thead>
     <tr>
       <th>User</th>
@@ -17,6 +30,7 @@
 
   <tbody>
     <% @bugs.each do |bug| %>
+    <% if bug.status == "open" %>
       <tr>
         <td><%= (bug.user.try(:lname) || "NA") %></td>
         <td><%= bug.title %></td>
@@ -28,10 +42,99 @@
         <td><%= link_to 'Edit', edit_bug_path(bug) %></td>
         <td><%= link_to 'Destroy', bug, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
+<br>
+<!--<a onclick="return popitup('/bugs/new')">New Bug</a>-->
+ <%= link_to 'New Bug', new_bug_path %>
+  </section>
+    
+  <section id="content2">
+       <table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Title</th>
+      <th>Despriction</th>
+      <th>Issue type</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <% @bugs.each do |bug| %>
+    <% if bug.status == "closed" %>
+      <tr>
+        <td><%= (bug.user.try(:lname) || "NA") %></td>
+        <td><%= bug.title %></td>
+        <td><%= bug.despriction %></td>
+        <td><%= bug.issue_type %></td>
+        <td><%= bug.priority %></td>
+        <td><%= bug.status %></td>
+        <td><%= link_to 'Show', bug %></td>
+        <td><%= link_to 'Edit', edit_bug_path(bug) %></td>
+        <td><%= link_to 'Destroy', bug, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<br>
+ <%= link_to 'New Bug', new_bug_path %>
+  </section>
+    
+  <section id="content3">
+       <table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Title</th>
+      <th>Despriction</th>
+      <th>Issue type</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bugs.each do |bug| %>
+    <% if bug.status == "monitor" %>
+      <tr>
+        <td><%= (bug.user.try(:lname) || "NA") %></td>
+        <td><%= bug.title %></td>
+        <td><%= bug.despriction %></td>
+        <td><%= bug.issue_type %></td>
+        <td><%= bug.priority %></td>
+        <td><%= bug.status %></td>
+        <td><%= link_to 'Show', bug %></td>
+        <td><%= link_to 'Edit', edit_bug_path(bug) %></td>
+        <td><%= link_to 'Destroy', bug, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 <br>
 
-<%= link_to 'New Bug', new_bug_path %>
+   <%= link_to 'New Bug', new_bug_path %>
+
+  </section>
+    
+</main>
+<!--Responsive Tab ends here...-->
+<!--<script language="javascript" type="text/javascript">-->
+<!--
+<!--function popitup(url) {-->
+
+<!--	newwindow=window.open(url,'name','height=200,width=150');-->
+<!--	if (window.focus) {newwindow.focus()}-->
+<!--	return false;-->
+<!--}-->
+
+// -->
+<!--</script>-->

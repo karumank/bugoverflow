@@ -5,10 +5,156 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  
 </head>
-<body>
+<body class="<%= controller.controller_name %>">
+<div class="content">
+    <!--<h1 class="title">BugRoo</h1>-->
+			<ul id="sdt_menu" class="sdt_menu">
+				<li>
+					<a href="#">
+						<img src="/assets/2.jpg" alt=""/>
+						<span class="sdt_active"></span>
+						<span class="sdt_wrap">
+							<span class="sdt_link">Bugs</span>
+							<!--<span class="sdt_descr">Get to know me</span>-->
+						</span>
+					</a>
+				 <div class="sdt_box">
+							<a href="bugs/new">Create</a>
+							<a href="#" onclick="alertSelect()">Edit</a>
+					</div>
+				</li>
+				<li>
+					<a href="#">
+						<img src="/assets/1.jpg" alt=""/>
+						<span class="sdt_active"></span>
+						<span class="sdt_wrap">
+							<span class="sdt_link">Users</span>
+							<!--<span class="sdt_descr">My work</span>-->
+						</span>
+					</a>
+					<div class="sdt_box">
+							<a href="users/new">Create</a>
+							<a href="#" onclick="alertSelect()">Edit</a>
+					</div>
+				</li>
+				<li>
+					<a href="#" onclick="underContruction()">
+						<img src="/assets/3.jpg" alt=""/>
+						<span class="sdt_active"></span>
+						<span class="sdt_wrap">
+							<span class="sdt_link" onclick="underContruction()">History</span>
+							<!--<span class="sdt_descr">Where ideas get born</span>-->
+						</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" onclick="underContruction()">
+						<img src="/assets/4.jpg" alt=""/>
+						<span class="sdt_active"></span>
+						<span class="sdt_wrap">
+							<span class="sdt_link" onclick="underContruction()">Open Bugs</span>
+							<!--<span class="sdt_descr">I like to photograph</span>-->
+						</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" onclick="underContruction()">
+						<img src="/assets/5.jpg" alt=""/>
+						<span class="sdt_active"></span>
+						<span class="sdt_wrap">
+							<span class="sdt_link" onclick="underContruction()">Priority</span>
+							<!--<span class="sdt_descr">I write about design</span>-->
+						</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" onclick="underContruction()">
+						<img src="/assets/6.jpg" alt=""/>
+						<span class="sdt_active"></span>
+						<span class="sdt_wrap">
+							<span class="sdt_link" onclick="underContruction()">Analysis</span>
+							<!--<span class="sdt_descr">I like to code</span>-->
+						</span>
+					</a>
+					<div class="sdt_box">
+						<a href="#" onclick="underContruction()">Bugs</a>
+						<a href="#" onclick="underContruction()">Users</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+<!--<div class="background-img">-->
+	
+<!--</div>-->
+	<div class="body-div">
 
-<%= yield %>
-
+   <%= yield %>
+		</div>
 </body>
 </html>
+<script>
+	$(document).ready(function(){
+/**
+				* for each menu element, on mouseenter, 
+				* we enlarge the image, and show both sdt_active span and 
+				* sdt_wrap span. If the element has a sub menu (sdt_box),
+				* then we slide it - if the element is the last one in the menu
+				* we slide it to the left, otherwise to the right
+				*/
+                $('#sdt_menu > li').bind('mouseenter',function(){
+					var $elem = $(this);
+					$elem.find('img')
+						 .stop(true)
+						 .animate({
+							'width':'170px',
+							'height':'170px',
+							'left':'0px'
+						 },400,'easeOutBack')
+						 .andSelf()
+						 .find('.sdt_wrap')
+					     .stop(true)
+						 .animate({'top':'140px'},500,'easeOutBack')
+						 .andSelf()
+						 .find('.sdt_active')
+					     .stop(true)
+						 .animate({'height':'170px'},300,function(){
+						var $sub_menu = $elem.find('.sdt_box');
+						if($sub_menu.length){
+							var left = '170px';
+							if($elem.parent().children().length == $elem.index()+1)
+								left = '-170px';
+							$sub_menu.show().animate({'left':left},200);
+						}	
+					});
+				}).bind('mouseleave',function(){
+					var $elem = $(this);
+					var $sub_menu = $elem.find('.sdt_box');
+					if($sub_menu.length)
+						$sub_menu.hide().css('left','0px');
+					
+					$elem.find('.sdt_active')
+						 .stop(true)
+						 .animate({'height':'0px'},300)
+						 .andSelf().find('img')
+						 .stop(true)
+						 .animate({
+							'width':'0px',
+							'height':'0px',
+							'left':'85px'},400)
+						 .andSelf()
+						 .find('.sdt_wrap')
+						 .stop(true)
+						 .animate({'top':'25px'},500);
+				});
+				
+			
+});
+	function alertSelect(){
+					alert("Please select the record from table below");
+				}
+	function underContruction(){
+		alert("OOPS! Krishna is working on it.");
+	}
+</script>
